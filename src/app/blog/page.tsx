@@ -4,10 +4,6 @@ import { BlogExplorer } from "@/components/sections/BlogExplorer";
 import { SectionHeading } from "@/components/ui/Section";
 import { getPosts } from "@/lib/content";
 
-// Cloudflare Pages serves this on the Workers runtime (edge) — required by
-// @cloudflare/next-on-pages, which has no Node.js runtime to fall back to.
-export const runtime = "edge";
-
 export const metadata: Metadata = {
   title: "Blog",
   description:

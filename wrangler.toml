@@ -1,19 +1,37 @@
 # ---------------------------------------------------------------------------
-# Cloudflare Pages local preview (`npx wrangler pages dev`).
+# Cloudflare Workers config for OpenNext (@opennextjs/cloudflare).
 #
-# The production build runs on Cloudflare's own infrastructure and is
-# configured from the Pages dashboard — see DEPLOYMENT.md. This file only
-# exists so `npm run preview` reproduces the runtime locally.
+# `npm run build:cf` emits `.open-next/worker.js` and `.open-next/assets`;
+# this file points Wrangler at that output. Deploy with `npm run deploy`.
 #
-# nodejs_compat is required by @cloudflare/next-on-pages: the Next.js server
-# components it shims reach for Node globals that the Workers runtime doesn't
-# otherwise expose.
+# Requirements: nodejs_compat plus a compatibility date of 2024-09-23 or later.
+# Do not change `main` or `assets` unless you change the build output dir.
 # ---------------------------------------------------------------------------
 name = "fajarariandi-portfolio"
-compatibility_date = "2025-09-01"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".vercel/output/static"
+main = ".open-next/worker.js"
+compatibility_date = "2024-12-30"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
 
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+# Self-reference: lets the worker call its own routes, which some Next.js
+# data-fetching paths need.
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "fajarariandi-portfolio"
+
+# Next.js ISR / incremental cache is stored in R2. Create a bucket and
+# uncomment to enable full ISR caching on Workers.
+# [[r2_buckets]]
+# binding = "NEXT_INC_CACHE_R2_BUCKET"
+# bucket_name = "fajarariandi-portfolio-cache"
+
+[images]
+binding = "IMAGES"
+
+# Non-secret environment only. Secrets (SANITY_API_READ_TOKEN,
+# RESEND_API_KEY) belong in `wrangler secret put` or the Workers dashboard —
+# never in this file.
 [vars]
-# Non-secret environment. Secrets (SANITY_API_READ_TOKEN, RESEND_API_KEY) belong
-# in `wrangler pages secret put` or the Pages dashboard — never in this file.

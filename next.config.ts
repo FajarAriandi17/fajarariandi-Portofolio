@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+
+// Exposes Wrangler bindings (assets, R2, …) to `next dev` so local
+// development matches the Workers runtime. No-op in every other command,
+// so it is safe to call at import time.
+initOpenNextCloudflareForDev();
 
 const nextConfig: NextConfig = {
   images: {

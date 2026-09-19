@@ -9,12 +9,14 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npx wrangler pages dev",
+    "build:cf": "opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "seed": "node --env-file=.env.local scripts/seed-sanity.ts",
     "seed:dry": "node --env-file=.env.local scripts/seed-sanity.ts --dry-run"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.6",
     "@portabletext/react": "^3.2.1",
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.0.0",
@@ -36,7 +38,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
-    "@cloudflare/next-on-pages": "^1.13.16",
     "@eslint/eslintrc": "^3.3.7",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.7",
@@ -48,6 +49,7 @@
     "lighthouse": "^13.4.1",
     "playwright": "^1.63.0",
     "tailwindcss": "^4.0.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "wrangler": "^4.135.0"
   }
 }

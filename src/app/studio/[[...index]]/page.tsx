@@ -15,9 +15,6 @@ import { sanityConfigured } from "@/sanity/env";
  */
 
 export const dynamic = "force-static";
-// Cloudflare Pages serves this on the Workers runtime (edge) — required by
-// @cloudflare/next-on-pages, which has no Node.js runtime to fall back to.
-export const runtime = "edge";
 
 export default function StudioPage() {
   if (!sanityConfigured) {

@@ -45,3 +45,5 @@ kie-mcp-*/
 # Cloudflare / Wrangler
 .vercel/
 .wrangler/
+.open-next/
+.dev.vars

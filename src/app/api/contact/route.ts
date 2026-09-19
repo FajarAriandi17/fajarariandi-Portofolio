@@ -11,13 +11,13 @@ import { contactSchema } from "@/lib/validation";
  * returns a success response — telling a bot it was caught only helps it
  * adapt, and a real user can never fill that field.
  *
- * Runs on the Edge runtime: the handler only uses Web-standard APIs (fetch,
- * Request/Response, Headers), and edge is what serverless hosts like Cloudflare
- * Pages execute. The in-memory rate limiter is per-isolate there, which the
- * limiter's own docs already call out.
+ * No `runtime = "edge"` export on purpose: OpenNext (@opennextjs/cloudflare)
+ * runs every route on the Workers runtime through nodejs_compat, and bundling
+ * an edge-runtime route alongside the server function fails its build. That
+ * costs nothing here — this handler only uses Web-standard APIs (fetch,
+ * Request/Response, Headers), all of which nodejs_compat exposes. The
+ * in-memory rate limiter stays per-isolate, as its own docs already call out.
  */
-
-export const runtime = "edge";
 
 const RATE_LIMIT = { limit: 5, windowMs: 60_000 };
 
