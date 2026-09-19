@@ -22,5 +22,7 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  // kie-mcp-0.5.3 is a vendored dev-time MCP connector, not part of this app —
+  // exclude it so the type checker doesn't compile its (unbuilt) sources.
+  "exclude": ["node_modules", "kie-mcp-*/"]
 }

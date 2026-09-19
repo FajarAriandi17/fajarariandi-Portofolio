@@ -39,6 +39,9 @@ tmp_*.mjs
 tmp_*.js
 tmp_*.py
 
+# vendored dev tooling (KIE.ai MCP connector) — not part of the portfolio
+kie-mcp-*/
+
 # Cloudflare / Wrangler
 .vercel/
 .wrangler/
