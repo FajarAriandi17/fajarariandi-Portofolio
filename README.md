@@ -1,109 +1,95 @@
-# FajarAriandi.com — Portfolio Platform
+# 🌌 FajarAriandi — Premium Portfolio
 
-Premium dark-futuristic portfolio for **Muhammad Fajar Ariandi**, built to the
-PRD in the repository root. AI-startup aesthetic, galaxy/space theme, Awwwards
-level of motion, and a full CMS behind it.
+> **Designer · Full Stack Developer · AI Creator · Networking & IoT Engineer**
 
-**Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 ·
-Motion · GSAP · Three.js / React Three Fiber · Sanity CMS
+A modern, dark-futuristic portfolio platform built to showcase professional work, technical expertise, and creative projects. Designed with immersive 3D interactions, high-performance architecture, and a scalable CMS, this portfolio represents my journey across **Web Development, Artificial Intelligence, Networking Infrastructure, and IoT Solutions**.
 
-## Getting started
+**Live Portfolio:** `https://fajarariandi-portofolio.pages.dev/` *(Live Website)*
 
-```bash
-npm install
-npm run dev      # http://localhost:3000
-```
+---
 
-No environment variables are required. Without Sanity the site serves typed
-fallback content from `src/content/fallback/*`, and the Studio explains what to
-configure.
+## About Me
 
-### Scripts
+Hi, I'm **Muhammad Fajar Ariandi**.
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Dev server |
-| `npm run build` | Production build |
-| `npm start` | Serve the production build |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run lint` | `eslint .` |
+I build digital experiences that combine **beautiful design**, **modern web technologies**, and **real-world infrastructure**. My background spans software development, AI-assisted workflows, networking deployment, CCTV & Starlink installations, and IoT implementation.
 
-### Enabling the CMS (optional)
+I'm currently open to **full-time opportunities**, **freelance collaborations**, and **creative technology projects**.
 
-Copy `.env.example` to `.env.local` and fill in the Sanity values, then
-restart. The site reads the Content Lake only when
-`NEXT_PUBLIC_SANITY_PROJECT_ID` is set — the footer shows `cms live` or
-`local content` so the source is never ambiguous.
+---
 
-The Studio is at `/studio`. It pins `siteSettings` and `aboutPage` to single
-documents so there is no way to create a duplicate the site would ambiguously
-resolve.
+## What You'll Find Here
 
-## Architecture
+* 🌌 Interactive 3D Galaxy Landing Page
+* 💼 Professional Project Case Studies
+* 🤖 AI & Automation Experiments
+* 🌐 Networking & Infrastructure Portfolio
+* 📡 IoT, CCTV & Starlink Deployments
+* 📝 Technical Blog & Knowledge Sharing
+* 📄 Printable Professional CV
+* 📱 Responsive, Accessible & SEO Optimized Experience
 
-```
-src/
-├─ app/                     Routes — every page is a server component
-│  ├─ studio/               Embedded Sanity Studio (the Admin Dashboard)
-│  ├─ cv/                   Printable résumé
-│  └─ api/contact/          Contact endpoint (rate-limited, honeypot, zod)
-├─ components/
-│  ├─ hero/                 WebGL galaxy + hero
-│  ├─ sections/             Page-level blocks
-│  ├─ cards/ · layout/ · ui/· cv/
-├─ content/fallback/        Typed seed content — the site without a CMS
-├─ lib/content.ts           The abstraction layer: Sanity → fallback
-├─ sanity/                  Config, schema types, GROQ queries
-└─ hooks/                   useEnvironment: hydration, viewport, low-power
-```
+---
 
-**Content layer.** Pages never touch Sanity directly. Every getter in
-`lib/content.ts` tries the Content Lake and falls back to typed seed data when
-Sanity is unconfigured *or unreachable*. The return types are identical either
-way, so the UI cannot tell the difference and nothing changes when the CMS goes
-live. The Sanity client is imported dynamically, so an unconfigured build never
-pulls it into the bundle.
+## Tech Stack
 
-**Imagery.** Hero, social-cover, and all ten project thumbnails are generated
-artwork in `public/images/`. `<MediaFrame>` renders a deterministic procedural
-gradient when an image URL is empty, so the layout is complete even where real
-artwork doesn't exist yet — swap the seed data when screenshots are ready.
+| Category   | Technologies                      |
+| ---------- | --------------------------------- |
+| Frontend   | Next.js 15, React 19, TypeScript  |
+| UI/UX      | Tailwind CSS v4, GSAP, Motion     |
+| 3D         | Three.js, React Three Fiber, Drei |
+| CMS        | Sanity Studio                     |
+| Backend    | Next.js API Routes                |
+| Validation | Zod                               |
+| Deployment | Cloudflare Pages                  |
 
-## Requirements coverage
+---
 
-| PRD area | Where |
-| --- | --- |
-| Hero + 3D galaxy | `components/hero/` — custom GLSL, three parallax shells, pointer parallax, parks when off-screen |
-| About | `sections/AboutSection.tsx` |
-| Skills (5 categories, proficiency) | `sections/SkillsSection.tsx` |
-| Projects + detail pages | `sections/ProjectsExplorer.tsx`, `app/projects/[slug]` |
-| Experience timeline | `sections/ExperienceSection.tsx` |
-| Blog (search, categories, tags, related) | `sections/BlogExplorer.tsx`, `app/blog/[slug]` |
-| Social hub | `sections/SocialSection.tsx` |
-| Contact + WhatsApp | `sections/ContactSection.tsx`, `app/api/contact` |
-| Admin Dashboard | `/studio` — full CRUD for every content type |
-| Animation | Galaxy, parallax, scroll reveals, stagger, tilt + magnetic cards, route transitions |
-| SEO | `sitemap.xml`, `robots.txt`, canonical, Open Graph, Twitter cards, JSON-LD |
-| Security | Rate limiting, honeypot, zod validation, env-isolated secrets |
-| Performance | Static/SSG generation, image optimisation, capped DPR, reduced-motion + low-power tiers |
+## Featured Expertise
 
-## Accessibility & performance
+### Web Development
 
-- Every ambient animation is opt-out via `prefers-reduced-motion`; the galaxy
-  renders a single frame and infinite loops stop entirely.
-- `prefers-reduced-transparency` replaces glass blur with a solid surface.
-- `useLowPowerDevice` drops the particle budget to roughly a third.
-- The WebGL canvas mounts post-hydration and sets `frameloop: "never"` when
-  scrolled out of view, so it costs nothing once the reader has moved on.
-- Visible focus styles are never suppressed; the hero paints a CSS gradient
-  base before any JS, so it is never blank on a slow connection.
+Building modern, scalable, and responsive web applications with performance-first architecture.
 
-## Notes
+### Artificial Intelligence
 
-- The "Download CV" CTA points at `/cv`, a real printable page. Use the
-  browser's print dialog → Save as PDF; the print stylesheet swaps to a clean
-  ink-on-paper layout.
-- Contact email delivery uses [Resend](https://resend.com) when configured.
-  Without credentials, submissions are logged to the server console so the form
-  works end-to-end in development.
-- The Studio route is excluded from the index and the sitemap.
+Developing AI-assisted workflows, creative automation, and productivity tools using modern AI technologies.
+
+### Networking & Infrastructure
+
+Experience in Starlink deployment, Mikrotik configuration, DHCP, routing, CCTV installation, and enterprise network implementation.
+
+### IoT Engineering
+
+Designing and deploying connected device ecosystems, monitoring systems, and infrastructure integrations.
+
+---
+
+## Professional Goals
+
+This portfolio is built as a long-term digital identity to:
+
+* Showcase professional experience
+* Present real production projects
+* Share technical knowledge
+* Attract recruiters & hiring managers
+* Collaborate with startups and clients worldwide
+
+---
+
+## Contact
+
+I'm always interested in discussing new opportunities, innovative products, and meaningful collaborations.
+
+* **Portfolio:** `fajarariandi.com`
+* **GitHub:** `github.com/FajarAriandi17`
+* **Email:** Available via the contact page
+* **Instagram & TikTok:** Linked inside the portfolio
+
+> *"Building technology that connects creativity with real-world solutions."*
+
+---
+
+### License
+
+© 2026 Muhammad Fajar Ariandi. All Rights Reserved.
