@@ -1,0 +1,53 @@
+{
+  "name": "fajarariandi-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Premium dark-futuristic portfolio platform for Muhammad Fajar Ariandi",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npx wrangler pages dev",
+    "seed": "node --env-file=.env.local scripts/seed-sanity.ts",
+    "seed:dry": "node --env-file=.env.local scripts/seed-sanity.ts --dry-run"
+  },
+  "dependencies": {
+    "@portabletext/react": "^3.2.1",
+    "@react-three/drei": "^10.0.0",
+    "@react-three/fiber": "^9.0.0",
+    "@sanity/client": "^8.6.2",
+    "@sanity/image-url": "^2.1.1",
+    "clsx": "^2.1.1",
+    "gsap": "^3.12.7",
+    "lenis": "^1.1.18",
+    "motion": "^12.0.0",
+    "next": "^15.1.6",
+    "next-sanity": "^9.12.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sanity": "^3.75.0",
+    "styled-components": "^6.5.3",
+    "tailwind-merge": "^2.6.0",
+    "three": "^0.173.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@cloudflare/next-on-pages": "^1.13.16",
+    "@eslint/eslintrc": "^3.3.7",
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@types/three": "^0.173.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.25",
+    "lighthouse": "^13.4.1",
+    "playwright": "^1.63.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3"
+  }
+}

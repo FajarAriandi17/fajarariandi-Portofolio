@@ -1,0 +1,19 @@
+# ---------------------------------------------------------------------------
+# Cloudflare Pages local preview (`npx wrangler pages dev`).
+#
+# The production build runs on Cloudflare's own infrastructure and is
+# configured from the Pages dashboard — see DEPLOYMENT.md. This file only
+# exists so `npm run preview` reproduces the runtime locally.
+#
+# nodejs_compat is required by @cloudflare/next-on-pages: the Next.js server
+# components it shims reach for Node globals that the Workers runtime doesn't
+# otherwise expose.
+# ---------------------------------------------------------------------------
+name = "fajarariandi-portfolio"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[vars]
+# Non-secret environment. Secrets (SANITY_API_READ_TOKEN, RESEND_API_KEY) belong
+# in `wrangler pages secret put` or the Pages dashboard — never in this file.

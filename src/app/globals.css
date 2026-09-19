@@ -1,0 +1,292 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   DESIGN TOKENS
+   The palette is lifted straight from the PRD. The three accents (blue → cyan
+   → violet) are always used as a gradient triplet — that is the single device
+   that makes every surface in the site read as one product.
+   ========================================================================== */
+
+@theme {
+  /* --- Surfaces: three depths, base is the void ------------------------- */
+  --color-base: #030712;
+  --color-deep: #0b1020;
+  --color-elevated: #111827;
+
+  /* --- Accents ---------------------------------------------------------- */
+  --color-accent-blue: #60a5fa;
+  --color-accent-cyan: #22d3ee;
+  --color-accent-violet: #8b5cf6;
+
+  /* --- Text ------------------------------------------------------------- */
+  --color-ink: #ffffff;
+  --color-ink-soft: #cbd5e1;
+  --color-ink-muted: #94a3b8;
+  /* #64748b measured only ~4.1:1 against the dark surfaces, under WCAG AA's
+     4.5:1 floor for the small metadata text this token is used for. Lightened
+     to ~5.3:1 on base / ~5.1:1 on the translucent card surfaces; still clearly
+     dimmer than ink-muted so the three-tier text hierarchy survives. */
+  --color-ink-faint: #74849a;
+
+  /* --- Hairlines -------------------------------------------------------- */
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.14);
+
+  /* --- Typography ------------------------------------------------------- */
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* --- Motion: one easing curve for the whole site ---------------------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  /* --- Ambient animations ----------------------------------------------- */
+  --animate-drift: drift 18s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
+  --animate-scan: scan 6s linear infinite;
+  /* `--duration` is set per-element by <ShineBorder>, so one orbit can be
+     slowed down or sped up without redefining the keyframes. */
+  --animate-shine: shine var(--duration) infinite linear;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.06);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* The highlight orbits the border ring by sweeping the gradient's position. */
+@keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* ============================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    /* Lenis drives scrolling; native smooth-scroll would fight it. */
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink-soft);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: rgb(96 165 250 / 0.3);
+    color: #fff;
+  }
+
+  /* Scrollbar — subtle, matches the void */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-base);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0.1);
+    border-radius: 999px;
+    border: 2px solid var(--color-base);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(255 255 255 / 0.2);
+  }
+
+  /* Visible focus for keyboard users only — never suppressed. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-cyan);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ============================================================================
+   UTILITIES
+   ========================================================================== */
+
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* The gradient triplet, applied to text. */
+@utility text-gradient {
+  background-image: linear-gradient(
+    110deg,
+    var(--color-accent-blue) 0%,
+    var(--color-accent-cyan) 45%,
+    var(--color-accent-violet) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* A hairline that fades in from both ends — used to separate sections
+   without ever drawing a hard box. */
+@utility rule-fade {
+  height: 1px;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.14) 50%,
+    transparent
+  );
+}
+
+@utility glass {
+  background-color: rgb(17 24 39 / 0.5);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--color-line);
+}
+
+/* Card surface: a soft top-lit edge reads as depth without a heavy border. */
+@utility surface {
+  position: relative;
+  background-image: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.05) 0%,
+    rgb(255 255 255 / 0.015) 40%,
+    transparent 100%
+  );
+  background-color: rgb(11 16 32 / 0.72);
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+}
+
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Skip rendering work for sections the reader is not looking at.
+ *
+ * `content-visibility: auto` lets the browser skip layout, paint, and hit
+ * testing for off-screen content entirely — on a page this long that is the
+ * single biggest scroll-budget win available. `contain-intrinsic-size` gives
+ * the browser a placeholder height so the scrollbar does not jump as sections
+ * switch between skipped and rendered. Both are progressive enhancements: an
+ * unsupported `content-visibility` is ignored and the page renders as before.
+ */
+@utility cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   Every ambient/decorative animation is opt-out. Motion that carries meaning
+   still animates; infinite decorative loops stop entirely.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Reduced-transparency and increased-contrast fallbacks for the glass
+   surfaces — the blur is decoration, the readable contrast is not. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background-color: var(--color-elevated);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
