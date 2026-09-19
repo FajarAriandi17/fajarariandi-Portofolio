@@ -2,6 +2,9 @@
 
 > **Designer · Full Stack Developer · AI Creator · Networking & IoT Engineer**
 
+<img width="1366" height="638" alt="image" src="https://github.com/user-attachments/assets/f192bec0-8f79-48f5-b0f2-82800b9ad0d6" />
+
+
 A modern, dark-futuristic portfolio platform built to showcase professional work, technical expertise, and creative projects. Designed with immersive 3D interactions, high-performance architecture, and a scalable CMS, this portfolio represents my journey across **Web Development, Artificial Intelligence, Networking Infrastructure, and IoT Solutions**.
 
 **Live Portfolio:** `https://fajarariandi-portofolio.pages.dev/` *(Live Website)*
